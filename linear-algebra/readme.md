@@ -1,0 +1,2 @@
+# Stanford ENGR108: Introduction to Matrix Methods #
+ENGR108 covers the basics of vectors and matrices, solving linear equations, least-square methods, and applications including tomography, image processing, data feeding, and time series predictions and finance.
