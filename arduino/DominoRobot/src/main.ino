@@ -68,12 +68,15 @@
 Servo servoMotor;                        
 
 //set up the drive motors
+Motor motor1 = Motor(AIN1, AIN2, PWMA, OFFSET_A, STBY);
 Motor motor2 = Motor(BIN1, BIN2, PWMB, OFFSET_B, STBY);
 
 // Initializes all speed variables to 0 values.
 int combinedmotorspeed, leftMotorSpeed, rightMotorSpeed;
 
 // Define variables for PID control
+int error;
+float lastError, derivative, controlSignal; 
 
 // variables for storing the value of the line sensors
 int leftSensorValue, rightSensorValue;
@@ -118,32 +121,38 @@ void setup()
 void loop() {
   // First, take care of the line following functions. 
   // We want to follow the line regardless of whether or not we're out of dominoes.
-
   // Even when the vehicle runs out of dominoes, it should follow the line to the next point
   // where a domino needs to be, then stop.
-
   // Read the line sensors and calculate control signal
   leftSensorValue = analogRead(LEFT_SENSOR_PIN);               
   rightSensorValue = analogRead(RIGHT_SENSOR_PIN);
 
   // Calculate the error (difference between the two sensor values)
+  error = leftSensorValue - rightSensorValue;
   
   // Calculate the derivative term, which is how fast the error is changing
-  
+  derivative = error - lastError;
+
   // Calculate the control signal
-  
+  controlSignal = KP * error + KD * derivative;
+
   // Store the current error for the next iteration
-  
+  lastError = error;
+
   // Calculate motor speeds based on the control signal
   // If the error is positive, this slows down the motor on the left
   // and speeds up the motor on the right. Vice versa if the error is negative.
-  
+  leftMotorSpeed = TOP_SPEED - controlSignal;
+  rightMotorSpeed = TOP_SPEED + controlSignal;
+
   // Ensure motor speeds are within the valid range
   // This makes the speed be somewhere between 0 and TOP_SPEED
   leftMotorSpeed = constrain(leftMotorSpeed, 0, TOP_SPEED);     
   rightMotorSpeed = constrain(rightMotorSpeed, 0, TOP_SPEED);
   
   // Apply motor speeds
+  motor1.drive(leftMotorSpeed);
+  motor2.drive(rightMotorSpeed);
   
   combinedmotorspeed = leftMotorSpeed + rightMotorSpeed;
   distanceSinceLastDrop += combinedmotorspeed;
@@ -154,7 +163,25 @@ void loop() {
   
   // If the limit switch is not pressed, this is true and the domino dispensing code executes
   if (!stopButtonPressed) {  
-  }
-  else {                                                
+    if ((distanceSinceLastDrop >= DISPENSE_DISTANCE) && !dominoDropped) {
+      servoMotor.write(SERVO_RIGHT);
+      distanceSinceLastDrop = 0;
+      dominoDropped = true;
+    } else if ((distanceSinceLastDrop >= 0.7 * DISPENSE_DISTANCE) && dominoDropped) {
+      servoMotor.write(SERVO_LEFT);
+      dominoDropped = false;
+    }
+  } else {                    
+    if (!dominoDropped) {
+      servoMotor.write(SERVO_RIGHT);
+      distanceSinceLastDrop = 0;
+      dominoDropped = true;
+    }                      
+
+    if (distanceSinceLastDrop >= DISPENSE_DISTANCE) {
+      motor1.brake();
+      motor2.brake();
+      while(true);
+    }      
   }
 }
