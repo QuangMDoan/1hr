@@ -61,7 +61,9 @@
 
 // Value combinedMotorSpeed needs to reach to drop a domino. 
 // Decreasing this puts dominoes closer together.
-#define DISPENSE_DISTANCE 500000                         
+#define DISPENSE_DISTANCE 500000                    
+
+int turnTime = 1750;
 
 Servo servoMotor;   // create an instance of servo motor object 
 
@@ -81,6 +83,7 @@ bool stopButtonPressed = false;               // Bool variable for tracking the 
 // Starting with this as DISPENSE_DISTANCE makes the vehicle drop a domino immediately.
 unsigned long distanceSinceLastDrop = DISPENSE_DISTANCE;    
 bool dominoDropped = false;
+bool startupButtonPressed = false; // Flag to track if button was pressed at startup
 
 void setup()
 {
@@ -90,8 +93,11 @@ void setup()
   
   // Set up the button handler to detect long press of limit switch. 
   // Sets up the button handler to wait for 200ms before reporting the limit switch is pressed.
+  if (digitalRead(BUTTON_PIN) == HIGH) {
+    startupButtonPressed = true;
+  }
+
   stopButton.setPressMs(200);                
-  
   // Have to use longPress because switch is pressed and held, not pressed and release as a single click.
   stopButton.attachLongPressStart(
     // This code not running when setup() is run
@@ -142,7 +148,14 @@ void loop() {
   // Move on to dispensing dominoes at the appropriate time 
   // Check the switch to see if we're out of dominoes or not
   // This has to be called every time through the loop()
-  stopButton.tick();                   
+  stopButton.tick();                 
+  if(startupButtonPressed) {
+    servoMotor.write(SERVO_RIGHT);
+    motor1.brake();
+    motor2.brake();
+
+    while(true);
+  }  
   
   // If the limit switch is not pressed, this is true and the domino dispensing code executes
   if (!stopButtonPressed) {  // figure out when to dispense a domino based on how far the robot has traveled
@@ -164,6 +177,21 @@ void loop() {
     }                      
 
     if (distanceSinceLastDrop >= DISPENSE_DISTANCE) { // Drive to the next point where a domino needs to be dropped. 
+      motor1.drive(255);
+      motor2.drive(255);
+      // This delay will impact how far the robot drives before turning
+      delay(1700);
+
+      motor1.drive(-255);
+      motor2.drive(255);
+      // This delay will impact how far the robot turns
+      delay(turnTime);
+
+      motor1.drive(90);
+      motor2.drive(90);
+      // This delay will impact how far the robot drives back towards the line of dominos
+      delay(1600);      
+
       motor1.brake(); // Stop both motors
       motor2.brake();
 
