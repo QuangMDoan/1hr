@@ -57,52 +57,36 @@
 // Right sensor pin
 #define RIGHT_SENSOR_PIN  A0                                
 
-// PWM value for max speed of motors
-#define TOP_SPEED         90                                
+#define TOP_SPEED         90                                // PWM value for max speed of motors
 
 // Value combinedMotorSpeed needs to reach to drop a domino. 
 // Decreasing this puts dominoes closer together.
 #define DISPENSE_DISTANCE 500000                         
 
-// create an instance of servo motor object 
-Servo servoMotor;                        
+Servo servoMotor;   // create an instance of servo motor object 
 
-//set up the drive motors
-Motor motor1 = Motor(AIN1, AIN2, PWMA, OFFSET_A, STBY);
+Motor motor1 = Motor(AIN1, AIN2, PWMA, OFFSET_A, STBY); //set up the drive motors
 Motor motor2 = Motor(BIN1, BIN2, PWMB, OFFSET_B, STBY);
 
-// Initializes all speed variables to 0 values.
-int combinedmotorspeed, leftMotorSpeed, rightMotorSpeed;
+int combinedmotorspeed, leftMotorSpeed, rightMotorSpeed; // Initializes all speed variables to 0 values
+float lastError, derivative, controlSignal; // Define variables for PID control
+int error; 
 
-// Define variables for PID control
-int error;
-float lastError, derivative, controlSignal; 
+int leftSensorValue, rightSensorValue; // variables for storing the value of the line sensors
 
-// variables for storing the value of the line sensors
-int leftSensorValue, rightSensorValue;
-
-// Out of dominoes switch setup. Active high, no internal pullup resistor
-OneButton stopButton = OneButton(BUTTON_PIN, false, false); 
-
-// stopButtonPressed is a Bool variable for tracking the state of the button
-bool stopButtonPressed = false;               
+OneButton stopButton = OneButton(BUTTON_PIN, false, false); // Out of dominoes switch setup
+bool stopButtonPressed = false;               // Bool variable for tracking the state of the button
 
 // Distance based domino dropping variables
 // Starting with this as DISPENSE_DISTANCE makes the vehicle drop a domino immediately.
 unsigned long distanceSinceLastDrop = DISPENSE_DISTANCE;    
-
 bool dominoDropped = false;
 
 void setup()
 {
-  // Enable the motor driver
-  digitalWrite(STBY, HIGH);                  
-
-  // Attach the servo to the specified pin
-  servoMotor.attach(SERVO_PIN);              
-
-  // Set initial servo position to the left to pick up a domino for immediate dispensing
-  servoMotor.write(SERVO_LEFT);              
+  digitalWrite(STBY, HIGH);                  // Enable the motor driver
+  servoMotor.attach(SERVO_PIN);              // Attach the servo to the specified pin
+  servoMotor.write(SERVO_LEFT);              // Set initial servo position to the left to pick up a domino for immediate dispensing
   
   // Set up the button handler to detect long press of limit switch. 
   // Sets up the button handler to wait for 200ms before reporting the limit switch is pressed.
@@ -110,8 +94,11 @@ void setup()
   
   // Have to use longPress because switch is pressed and held, not pressed and release as a single click.
   stopButton.attachLongPressStart(
-    //Lambda function that sets stopButtonPressed flag to true when the switch is pressed.
-    []() { stopButtonPressed = true; }
+    // This code not running when setup() is run
+    []() { 
+      //Lambda function that sets stopButtonPressed flag to true when the switch is pressed.
+      stopButtonPressed = true; 
+    }
   );
   
   // wait most of a second just to be sure that the domino is picked up.
@@ -123,21 +110,17 @@ void loop() {
   // We want to follow the line regardless of whether or not we're out of dominoes.
   // Even when the vehicle runs out of dominoes, it should follow the line to the next point
   // where a domino needs to be, then stop.
-  // Read the line sensors and calculate control signal
-  leftSensorValue = analogRead(LEFT_SENSOR_PIN);               
+
+  leftSensorValue = analogRead(LEFT_SENSOR_PIN);                 // Read the line sensors and calculate control signal
   rightSensorValue = analogRead(RIGHT_SENSOR_PIN);
 
-  // Calculate the error (difference between the two sensor values)
-  error = leftSensorValue - rightSensorValue;
+  error = leftSensorValue - rightSensorValue; // Calculate the error (difference between the two sensor values)
   
-  // Calculate the derivative term, which is how fast the error is changing
-  derivative = error - lastError;
+  derivative = error - lastError; // Calculate the derivative term, which is how fast the error is changing
 
-  // Calculate the control signal
-  controlSignal = KP * error + KD * derivative;
+  controlSignal = KP * error + KD * derivative; // Calculate the control signal
 
-  // Store the current error for the next iteration
-  lastError = error;
+  lastError = error; // Store the current error for the next iteration
 
   // Calculate motor speeds based on the control signal
   // If the error is positive, this slows down the motor on the left
@@ -150,37 +133,42 @@ void loop() {
   leftMotorSpeed = constrain(leftMotorSpeed, 0, TOP_SPEED);     
   rightMotorSpeed = constrain(rightMotorSpeed, 0, TOP_SPEED);
   
-  // Apply motor speeds
-  motor1.drive(leftMotorSpeed);
+  motor1.drive(leftMotorSpeed);   // Apply motor speeds
   motor2.drive(rightMotorSpeed);
   
   combinedmotorspeed = leftMotorSpeed + rightMotorSpeed;
-  distanceSinceLastDrop += combinedmotorspeed;
+  distanceSinceLastDrop += combinedmotorspeed;   // That's it for the line following functions
 
-  // That's it for the line following functions, now move on to dispensing dominoes at the appropriate time.
-  //Check the switch to see if we're out of dominoes or not. This has to be called every time through the loop()
+  // Move on to dispensing dominoes at the appropriate time 
+  // Check the switch to see if we're out of dominoes or not
+  // This has to be called every time through the loop()
   stopButton.tick();                   
   
   // If the limit switch is not pressed, this is true and the domino dispensing code executes
-  if (!stopButtonPressed) {  
-    if ((distanceSinceLastDrop >= DISPENSE_DISTANCE) && !dominoDropped) {
-      servoMotor.write(SERVO_RIGHT);
-      distanceSinceLastDrop = 0;
-      dominoDropped = true;
+  if (!stopButtonPressed) {  // figure out when to dispense a domino based on how far the robot has traveled
+
+    if ((distanceSinceLastDrop >= DISPENSE_DISTANCE) && !dominoDropped) { // if we've traveled far enough and a domino hasn't been dropped yet
+      servoMotor.write(SERVO_RIGHT); 
+      distanceSinceLastDrop = 0; // reset the distance count to 0 because we just dropped a domino
+      dominoDropped = true; // domino has been dropped 
     } else if ((distanceSinceLastDrop >= 0.7 * DISPENSE_DISTANCE) && dominoDropped) {
-      servoMotor.write(SERVO_LEFT);
-      dominoDropped = false;
+      // if a domino was dropped and we're far enough away to close the domino gate without jamming
+      servoMotor.write(SERVO_LEFT); // pick up a new domino for dropping
+      dominoDropped = false; // we haven't dropped the new domino, so now this is false.
     }
-  } else {                    
-    if (!dominoDropped) {
-      servoMotor.write(SERVO_RIGHT);
-      distanceSinceLastDrop = 0;
+  } else {                    // this code executes if the limit switch is pressed (vehicle is out of dominoes)
+    if (!dominoDropped) { // check if a domino has been dropped
+      servoMotor.write(SERVO_RIGHT); // If a domino is still in the magazine drop the domino
+      distanceSinceLastDrop = 0; // reset the distanceSince LastDrop
       dominoDropped = true;
     }                      
 
-    if (distanceSinceLastDrop >= DISPENSE_DISTANCE) {
-      motor1.brake();
+    if (distanceSinceLastDrop >= DISPENSE_DISTANCE) { // Drive to the next point where a domino needs to be dropped. 
+      motor1.brake(); // Stop both motors
       motor2.brake();
+
+      // Stay in this position forever
+      // This loop just repeats endlessly, or at least until the physical reset button is pressed.
       while(true);
     }      
   }
