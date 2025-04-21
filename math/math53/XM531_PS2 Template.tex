@@ -1,0 +1,225 @@
+%\documentclass{article}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools} 
+\usepackage{amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{romannum}
+\usepackage{comment}
+
+\usepackage{xfp}
+\usepackage{fp}
+\usepackage{forloop}
+\usepackage{pgffor}
+
+\makeatletter % Use \makeatletter to access internal LaTeX commands
+
+%% Sets margins
+\usepackage{geometry}
+ \geometry{
+ letterpaper,
+ total={165mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ 
+ 
+
+%%NEWENVIRONMENTS:
+\newenvironment{ea}{\begin{list}{\alph{ea}.}
+	{\usecounter{ea}}}{\end{list}}
+
+%NEWCOUNTERS:
+\newcounter{ea}
+
+%NEW COMMANDS
+\newcommand {\Problem} [1] { \bigskip \noindent\Large {\bf Problem #1} \\  \normalsize}
+\newcommand {\myLine} {\bigskip \noindent\rule{17.7cm}{0.4pt} \medskip}
+
+\newcommand {\mySpaceLeft}{\the\dimexpr\pagegoal-\pagetotal\relax}
+
+
+\newcommand{\fillSpaceWithLines}[1]{
+
+  \edef\mySpaceLeft{\the\dimexpr\pagegoal-\pagetotal\relax}
+  \edef\myReal{\fpeval{\mySpaceLeft/1pt}}
+  \edef\myLines{\fpeval{round(\myReal/#1)}}
+  \foreach \varLines in {1,...,\myLines} {
+    \dotfill
+    \vspace{3mm}
+    
+  }
+  \eject
+}  
+
+\newcommand{\fillWithLines}[1]{
+
+\bigskip
+
+
+\bigskip
+
+	\fillSpaceWithLines {#1}
+}
+
+\newcommand{\addPage}{
+
+Additional sheet for problem \rule{3cm}{0.2pt}
+\bigskip
+
+\fillSpaceWithLines {26}
+
+}
+
+%\excludecomment{latex}
+\includecomment{latex}
+\excludecomment{handout}
+%\includecomment{handout}
+
+\begin{handout}
+\newenvironment{Solution}{
+	\bigskip
+
+	\fillSpaceWithLines {26}
+	}{ }
+\end{handout}
+
+\begin{latex}
+\newenvironment{Solution}{
+	\underline{Solution:}
+	}{ }
+\end{latex}
+
+	
+%% Initial instructions: 
+%% Below is the "visible" part of the LaTeX file. Include your solution where it is marked.
+%% Note that some *new commands* have been defined above. You may use them instead of the original LaTeX commands. 
+%% Suggesting to use the $$...$$ to display centered text of formulas to emphasize your major results.
+%% Please keep one problem per page for easier reading.
+
+\begin{document}
+
+\setstretch {1.2}
+
+\begin{center}
+  \begin{Large}
+    XM531 Problem Set 2
+    
+    \medskip
+	\ 
+	\begin{latex}
+   	 Your Name
+	\end{latex}
+  \end{Large} \\
+\end{center}
+
+\medskip
+
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 1 If $W(f,g)$ is the Wronskian of $f$ and $g$, and if $u=2f-g$, $v=f+2g$, find the Wronskian of $W(u,v)$ of $u$ and $v$ in terms of $W(f,g)$
+
+\myLine
+
+}
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 2 Assume that $y_1$ and $y_2$ are a fundamental aset of solutions of $y''+p(t)y'+q(t)y=0$ and let $y_3=a_1y_1+a_2y_2$ and $y_4=b_1y_1 +b_2y_2$, where $a_1,a_2,b_1,$ and $b_2$ are any constants. Show that
+$$W(y_3,y_4) = (a_1b_2 - a_2b_1)W(y_1,y_2).$$
+Are $y_3$ and $y_4$ also a fundamental set of solutions? Why or why not?
+
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 3 Find the fundamental set of solutions specified by Theorem 3.2.5 for the given differential equation and initial point.
+$$y'' + y' - 2y = 0; \ \ \ \ t_0 = 0$$
+
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+\Problem 4
+Find the characteristic polynomial, and then write the general solution to the ODEs.
+\begin{enumerate}[label=(\alph*)]
+\item  $\displaystyle{y'' - 4y' - 12y=0}$.
+\item  $\displaystyle{-\frac{1}{2}y''  = 13y + 5y'}$.
+\item  $y''+9y=6y'$.
+\end{enumerate}
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 5
+A $3$-foot spring measures $9$ feet long after a mass weighing $12$ pounds is attached to it. The medium through which the mass moves offers a damping force numerically equal to $\sqrt{3}$ times the instantaneous velocity. Find the equation of motion if the mass is initially released from the equilibrium position with a downward velocity of $5$ ft/s. Hint: Use $g = 32$ $\textrm{ft}/\textrm{s}^2$ for the acceleration due to gravity.
+
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+\begin{handout}
+\bigskip
+
+Additional sheet for Problem \rule{1cm}{0.2pt}
+
+\bigskip
+
+\fillWithLines {26}
+\end{handout}
+
+\end{document}
+

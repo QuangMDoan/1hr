@@ -1,0 +1,208 @@
+%\documentclass{article}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools} 
+\usepackage{amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{romannum}
+\usepackage{comment}
+\usepackage{multimedia}
+
+\usepackage{xfp}
+\usepackage{fp}
+\usepackage{forloop}
+\usepackage{pgffor}
+
+\makeatletter % Use \makeatletter to access internal LaTeX commands
+
+%% Sets margins
+\usepackage{geometry}
+ \geometry{
+ letterpaper,
+ total={165mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ 
+ 
+
+%%NEWENVIRONMENTS:
+\newenvironment{ea}{\begin{list}{\alph{ea}.}
+	{\usecounter{ea}}}{\end{list}}
+
+%NEWCOUNTERS:
+\newcounter{ea}
+
+%NEW COMMANDS
+\newcommand {\Problem} [1] { \bigskip \noindent\Large {\bf Problem #1} \\  \normalsize}
+\newcommand {\myLine} {\bigskip \noindent\rule{17.7cm}{0.4pt} \medskip}
+
+\newcommand {\mySpaceLeft}{\the\dimexpr\pagegoal-\pagetotal\relax}
+
+
+\newcommand{\fillSpaceWithLines}[1]{
+
+  \edef\mySpaceLeft{\the\dimexpr\pagegoal-\pagetotal\relax}
+  \edef\myReal{\fpeval{\mySpaceLeft/1pt}}
+  \edef\myLines{\fpeval{round(\myReal/#1)}}
+  \foreach \varLines in {1,...,\myLines} {
+    \dotfill
+    \vspace{3mm}
+    
+  }
+  \eject
+}  
+
+\newcommand{\fillWithLines}[1]{
+
+\bigskip
+
+
+\bigskip
+
+	\fillSpaceWithLines {#1}
+}
+
+\newcommand{\addPage}{
+
+Additional sheet for problem \rule{3cm}{0.2pt}
+\bigskip
+
+\fillSpaceWithLines {26}
+
+}
+
+%\excludecomment{latex}
+\includecomment{latex}
+\excludecomment{handout}
+%\includecomment{handout}
+
+\begin{handout}
+\newenvironment{Solution}{
+	\bigskip
+
+	\fillSpaceWithLines {26}
+	}{ }
+\end{handout}
+
+\begin{latex}
+\newenvironment{Solution}{
+	\underline{Solution:}
+	}{ }
+\end{latex}
+
+	
+%% Initial instructions: 
+%% Below is the "visible" part of the LaTeX file. Include your solution where it is marked.
+%% Note that some *new commands* have been defined above. You may use them instead of the original LaTeX commands. 
+%% Suggesting to use the $$...$$ to display centered text of formulas to emphasize your major results.
+%% Please keep one problem per page for easier reading.
+
+\begin{document}
+
+\setstretch {1.2}
+
+\begin{center}
+  \begin{Large}
+    XM531 Problem Set 3
+    
+    \medskip
+	\ 
+	\begin{latex}
+   	 Your Name
+	\end{latex}
+  \end{Large} \\
+\end{center}
+
+\medskip
+
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 1 
+Use the method of variation of parameters to determine the general solution of the differential equaion
+\[y''' + y' = \sec t, \frac{-\pi}{2}< t < \frac{\pi}{2}.\]
+\myLine
+}
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+Use the method of undeterminded coefficients to determine the general solution of the differential equation 
+\[y^{(4)} + y'' + y = \sin t.\]
+\Problem 2 
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 3 
+Determine the radius of convergence of the power series
+\[\sum_{n=1}^\infty \frac{n!x^n}{n^n}.\]
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+\Problem 4
+Consider the inital value problem
+\[y'' + xy' +2y = 0; \ \ \ \ y(0)=4, \ \ \ \ y'(0) = -1.\]
+\begin{ea}
+\item Find the first five nonzero terms in the solution of the given inital value problem.\\
+\item Plot the four-term and five-term approximations to the solution on teh same axes.\\
+\item rom the plot in part (b) estimate the interval in which the four-term approximation
+is reasonably accurate.
+\end{ea}
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+\begin{handout}
+\bigskip
+
+Additional sheet for Problem \rule{1cm}{0.2pt}
+
+\bigskip
+
+\fillWithLines {26}
+\end{handout}
+
+\end{document}
+

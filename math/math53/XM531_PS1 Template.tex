@@ -1,0 +1,245 @@
+%\documentclass{article}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools} 
+\usepackage{amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{romannum}
+\usepackage{comment}
+
+\usepackage{xfp}
+\usepackage{fp}
+\usepackage{forloop}
+\usepackage{pgffor}
+
+\makeatletter % Use \makeatletter to access internal LaTeX commands
+
+%% Sets margins
+\usepackage{geometry}
+ \geometry{
+ letterpaper,
+ total={165mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ 
+ 
+
+%%NEWENVIRONMENTS:
+\newenvironment{ea}{\begin{list}{\alph{ea}.}
+	{\usecounter{ea}}}{\end{list}}
+
+%NEWCOUNTERS:
+\newcounter{ea}
+
+%NEW COMMANDS
+\newcommand {\Problem} [1] { \bigskip \noindent\Large {\bf Problem #1} \\  \normalsize}
+\newcommand {\myLine} {\bigskip \noindent\rule{17.7cm}{0.4pt} \medskip}
+
+\newcommand {\mySpaceLeft}{\the\dimexpr\pagegoal-\pagetotal\relax}
+
+
+\newcommand{\fillSpaceWithLines}[1]{
+
+  \edef\mySpaceLeft{\the\dimexpr\pagegoal-\pagetotal\relax}
+  \edef\myReal{\fpeval{\mySpaceLeft/1pt}}
+  \edef\myLines{\fpeval{round(\myReal/#1)}}
+  \foreach \varLines in {1,...,\myLines} {
+    \dotfill
+    \vspace{3mm}
+    
+  }
+  \eject
+}  
+
+\newcommand{\fillWithLines}[1]{
+
+\bigskip
+
+
+\bigskip
+
+	\fillSpaceWithLines {#1}
+}
+
+\newcommand{\addPage}{
+
+Additional sheet for problem \rule{3cm}{0.2pt}
+\bigskip
+
+\fillSpaceWithLines {26}
+
+}
+
+%\excludecomment{latex}
+\includecomment{latex}
+\excludecomment{handout}
+%\includecomment{handout}
+
+\begin{handout}
+\newenvironment{Solution}{
+	\bigskip
+
+	\fillSpaceWithLines {26}
+	}{ }
+\end{handout}
+
+\begin{latex}
+\newenvironment{Solution}{
+	\underline{Solution:}
+	}{ }
+\end{latex}
+
+	
+%% Initial instructions: 
+%% Below is the "visible" part of the LaTeX file. Include your solution where it is marked.
+%% Note that some *new commands* have been defined above. You may use them instead of the original LaTeX commands. 
+%% Suggesting to use the $$...$$ to display centered text of formulas to emphasize your major results.
+%% Please keep one problem per page for easier reading.
+
+\begin{document}
+
+\setstretch {1.2}
+
+\begin{center}
+  \begin{Large}
+    XM531 Problem Set 1
+    
+    \medskip
+    Your Name
+  \end{Large} \\
+\end{center}
+
+\medskip
+
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 1 For each of the following give an example. You do not need to solve your example.
+
+\begin{enumerate}[label=(\alph*)]
+    
+\item  Give an example of a second-order ODE that is non-linear.
+
+\item  Give an example of a first-order ODE that is linear but non-separable.
+
+\item  Give an example of a first-order ODE that is separable but non-linear.
+
+\item  Give an example of a first-order ODE that is non-separable and non-linear or explain why such a differential equation cannot exist.
+
+\item  Give an example of a first-order ODE that is separable and linear or explain why such a differential equation cannot exist.
+\end{enumerate}
+
+\myLine
+
+}
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 2 Sometimes it is possible to solve a nonlinear equation by making a change of the dependent variable that converts it into a linear equation. The most important equation has the form
+$$y' + p(t)y = q(t)y^n,$$
+and is called a Bernoulli equation after Jakob Bernoulli. 
+
+\begin{enumerate}[label=(\alph*)]
+\item  Solve the Bernoulli Equation when $n=0$; when $n=1$.
+
+\item  Show that if $n\neq 0,1,$ then the substitution $v = y^{1-n}$ reduces Bernoulli's equation to a linear equation. This method of solution was found by Leibniz in 1696.
+
+\end{enumerate}
+
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 3 Find a substitution of $v$ that reduces the problem
+$$y' = f(ax+by+c),$$
+into a separable differential equation.
+
+
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+\Problem 4
+Using an appropriate substitution, find the general solution to the ODEs.
+\begin{enumerate}[label=(\alph*)]
+\item  $\displaystyle{y' = (2x+3y)^2}$.
+\item  $y^2y'+\dfrac{y^3}{t}=\dfrac{2}{t^2}$.
+\item  $(x^2-y^2)dx+xydy=0$.
+\end{enumerate}
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 5
+Verify that the DE is not exact. Find an integration factor $\mu(x)$, such that multiplying by $\mu(x)$ makes the DE exact. You must clearly state how $\mu(x)$ was found. Finally, solve the DE.
+$$(\sin(y)-2ye^{-x}\sin(x))dx + (\cos(y)+2e^{-x}\cos(x))dy=0.$$ 
+
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+\begin{handout}
+\bigskip
+
+Additional sheet for Problem \rule{1cm}{0.2pt}
+
+\bigskip
+
+\fillWithLines {26}
+\end{handout}
+
+\end{document}
+

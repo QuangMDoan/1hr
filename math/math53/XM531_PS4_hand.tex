@@ -1,0 +1,222 @@
+%\documentclass{article}
+
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools} 
+\usepackage{amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{romannum}
+\usepackage{comment}
+\usepackage{multimedia}
+
+\usepackage{xfp}
+\usepackage{fp}
+\usepackage{forloop}
+\usepackage{pgffor}
+
+\makeatletter % Use \makeatletter to access internal LaTeX commands
+
+%% Sets margins
+\usepackage{geometry}
+ \geometry{
+ letterpaper,
+ total={165mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ 
+ 
+
+%%NEWENVIRONMENTS:
+\newenvironment{ea}{\begin{list}{\alph{ea}.}
+	{\usecounter{ea}}}{\end{list}}
+
+%NEWCOUNTERS:
+\newcounter{ea}
+
+%NEW COMMANDS
+\newcommand {\Problem} [1] { \bigskip \noindent\Large {\bf Problem #1} \\  \normalsize}
+\newcommand {\myLine} {\bigskip \noindent\rule{17.7cm}{0.4pt} \medskip}
+
+\newcommand {\mySpaceLeft}{\the\dimexpr\pagegoal-\pagetotal\relax}
+
+
+\newcommand{\fillSpaceWithLines}[1]{
+
+  \edef\mySpaceLeft{\the\dimexpr\pagegoal-\pagetotal\relax}
+  \edef\myReal{\fpeval{\mySpaceLeft/1pt}}
+  \edef\myLines{\fpeval{round(\myReal/#1)}}
+  \foreach \varLines in {1,...,\myLines} {
+    \dotfill
+    \vspace{3mm}
+    
+  }
+  \eject
+}  
+
+\newcommand{\fillWithLines}[1]{
+
+\bigskip
+
+
+\bigskip
+
+	\fillSpaceWithLines {#1}
+}
+
+\newcommand{\addPage}{
+
+Additional sheet for problem \rule{3cm}{0.2pt}
+\bigskip
+
+\fillSpaceWithLines {26}
+
+}
+
+%\excludecomment{latex}
+\includecomment{latex}
+\excludecomment{handout}
+%\includecomment{handout}
+
+\begin{handout}
+\newenvironment{Solution}{
+	\bigskip
+
+	\fillSpaceWithLines {26}
+	}{ }
+\end{handout}
+
+\begin{latex}
+\newenvironment{Solution}{
+	\underline{Solution:}
+	}{ }
+\end{latex}
+
+	
+%% Initial instructions: 
+%% Below is the "visible" part of the LaTeX file. Include your solution where it is marked.
+%% Note that some *new commands* have been defined above. You may use them instead of the original LaTeX commands. 
+%% Suggesting to use the $$...$$ to display centered text of formulas to emphasize your major results.
+%% Please keep one problem per page for easier reading.
+
+\begin{document}
+
+\setstretch {1.2}
+
+\begin{center}
+  \begin{Large}
+    XM531 Problem Set 4
+    
+    \medskip
+	\ 
+	\begin{latex}
+   	 Your Name
+	\end{latex}
+  \end{Large} \\
+\end{center}
+
+\medskip
+
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 1 
+The \emph{gamma function} is denoted by $\Gamma(p)$ and is defined by the integral
+$$\Gamma(p+1)=\int_0^\infty e^{-x}x^pdx.$$
+\begin{ea}
+\item Show that, for $p>0, \Gamma(p+1) = p\Gamma(p)$.
+\item Show that $\Gamma(1)=1$.
+\item If $p$ is a positive integer $n$, show that $\Gamma(n+1) = n!$.
+Since $\Gamma(p)$ is also defined when $p$ is not an integer, this function provides an extnsion of the factorial function to nonintegral vales of the independent variable. Note that it is also consistent to define $0!=1$.
+\item Show that, for $p>0$, 
+$$p(p+1)(p+2)\dots (p+n+1) = \frac{\Gamma(p+n)}{\Gamma(p)}.$$ 
+\item Thus $\Gamma(p)$ can be determined for al positive values of $p$ if $\gamma(p)$ is known in a single interval of unit length , say $0<p\leq 1$. It is possible to show that $\Gamma\left(\frac{1}{2}\right)=\sqrt{\pi}$. Find $\Gamma\left(\frac{3}{2}\right)$ and $\Gamma\left(\frac{11}{2}\right)$.
+\end{ea}
+\myLine
+
+}
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+\Problem 2 
+Use the Laplace transform to solve the given intial value problem.
+\[y''+3y'+2y= 0;\ \ \ \ \ y(0)=1, \ \ y'(0)=0.\]
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+
+\Problem 3 
+Let $\alpha$ be a real number. Express the solution of the given initial value problm in terms of a convolution integral.
+\[y''+2y'+2y = \sin(\alpha t);\ \ \ \ \ y(0)=0,\ \ y'(0)=0.\]
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+{\color {Blue} 
+\Problem 4
+Let $\alpha$ be a real number. Find the Laplace transform of the following:
+
+\begin{ea}
+\item $f(t) = t^2\sinh(\alpha t)$\\
+\item $g(t) = \begin{cases} 
+t,& 0\leq t < 1,\\
+2-t,& 1\leq t< 2,\text{ and}\\
+0,& 2\leq t <\infty
+\end{cases}$
+\end{ea}
+\myLine
+}
+
+
+\begin{Solution}
+
+\end{Solution}
+
+\eject
+
+%%%%%%%%%%%%%%%%%%
+
+\begin{handout}
+\bigskip
+
+Additional sheet for Problem \rule{1cm}{0.2pt}
+
+\bigskip
+
+\fillWithLines {26}
+\end{handout}
+
+\end{document}
+
