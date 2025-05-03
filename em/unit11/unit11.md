@@ -488,8 +488,38 @@ $$Q(t) = Q_0e^{-t/RC}$$
 - voltage acrosss the resistor when discharging capacitor
 $$V_R(t) = V_be^{-t/RC}$$
 
-- current through resistor when charging capacitor
-$$I(t) = \frac{V_b}{R}e^{-t/RC}$$
+- current through resistor when discharging capacitor
+$$I(t) = -\frac{V_b}{R}e^{-t/RC}$$
+
+### 11.8.4. analyze non steady state conditions for various open/closed switch scenarios. 
+
+**RC time constant**
+
+The time constant of an RC circuit is a measure of how quickly the capacitor will charge or dischage. 
+
+$$\tau = R_{eq}C_{eq}$$
+
+how much time do you get to 63% of your maximum charge?
+
+ans: when $t = RC$
+
+t = RC is also the time needed to discharge to 37 percent of the maximum charge. 
+
+how do you know which equation to use: 
+
+$$e^{-t/RC} \quad \text{vs. } \quad 1-e^{-t/RC}$$
+
+if the capacitor is emptying aka losing charges, then use 
+
+$$e^{-t/RC}$$
+
+otherwise use
+$$1-e^{-t/RC}$$
+
+
+
+
+
 
 
 
