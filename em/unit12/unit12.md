@@ -378,4 +378,64 @@ Sketch a graph of the magnetic field of a current carrying coaxial wire as a fun
 
 ### Takeaways
 - Using ampere's law to find magnetic field strength depends on symmetry 
-- 
+- to simplify $\oint \vec{B} \cdot d\vec{l}$ check the following conditions
+- Magnetic field is constant over the integration path(unless $\theta = 90\degree$) 
+- magnetic field is at a constant angle to the integration path (usually parallel $0\degree$)
+
+## 12.4 Ampere's Law 
+
+### 12.4.1 apply Ampere's law to calculate the number of turns in a solenoid. 
+
+**What is a Solenoid?**
+
+A solenoid is an electrical device formed out of a tightly wound helical coil of wire
+- The length of the solenoid is typically much larger than its diameter
+- each individual loop contributes to the magnetic field inside the coils. 
+- when current flows, a solenoid becomes an electromagnet. 
+
+**Demonstration of magnetic field of solenoid**
+- no magnetic field outside of solenoid. 
+- magnetic field inside is parallel to axis of solenoid when current is flowing. 
+
+**Magnetic field of a solenoid**
+
+To Find the direction of the magnetic field...
+- Use the right hand 
+- curl fingers in the direction current flows through the loop 
+- your thumb will point in the direction of the magnetic field inside the solenoid. 
+
+**How many turns are there?**
+
+- Current = 2.33A
+- Length of Solenoid = 11.5cm = 0.115m 
+- Magnetic field strength = 5.78mT at end of solenoid
+
+**Make a plan to find the number of turns**
+
+- choose an appropriate amperian loop
+  - B field must be constant in magnitude and parallel or perpendicular to the loopat all points. 
+
+**find the current enclosed**
+
+Each loop of wire has the same current flowing through it. 
+
+$$I_enc = I\cdot n \cdot w$$
+
+n = number of turns per unit length of the solenoid. 
+
+w = the width of the amperian loop. 
+
+### Takeaways 
+- A solenoid is made from a long wire coiled many times to form a tube. 
+- solenoids are electromagnets and have lots of industrial applications. 
+- idea solenoids have no resistance, a constant magnetic field inside and no magnetic field outside
+- Amperian loops can be any shape, not just circles. 
+- circles and rectangles are the Amperian loops most common in AP Physics C. 
+- There is a difference between the total number of turns of a solenoid and the number of turns per unit length. 
+
+$$B_{sol} = \mu_0nI$$
+$$n = \text{turns per unit length}$$
+$$n = \frac{N}{L}$$
+$$N = \frac{B_{sol}L}{\mu_0I}$$
+
+
