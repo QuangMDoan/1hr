@@ -681,3 +681,15 @@ $$\omega^2 = \frac{1}{LC}$$
 $$25 = \frac{1}{0.4*C}$$
 $$C = \frac{1}{0.4*25}$$
 $$C = \frac{1}{10}$$
+
+### Takeaways 
+
+LC circuits can be modeled as SHM with an angular frequency equal to the following: 
+
+$$\omega = \frac{1}{\sqrt{LC}}$$
+
+The period of an LC circuit is equal to the following: 
+
+$$T = 2\pi\sqrt{LC}$$
+
+Increasing either the inductance or capcitance causes the circuit to oscillate with a shorter frequency/longer period. 
