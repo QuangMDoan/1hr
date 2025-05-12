@@ -304,12 +304,16 @@ $$a_c = \frac{2\pi v}{T}$$
 $$a_c = \frac{4\pi r^2}{T^2}$$
 $$a_c = \frac{v^2}{r}$$
 
+### 2.10.3 explore how uniform circular motion can arise from multiple forces. We'll also analyze some "critical cases" when one force is on the verge of vanishing. 
 
+**UCM quantitatively**
+$$v = \frac{2\pi r}{T}$$
+$$v = \frac{2\pi v}{T}$$
 
+- In general, `a` can have
+  - a centripetal component $a_c$ which changes v's direction
+  - and a tangential component $a_{tan}$ which changes v's magnitude, speed 
 
+**Ferris wheel: top**
 
-
-
-
-
-
+###
