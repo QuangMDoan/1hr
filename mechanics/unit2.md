@@ -316,4 +316,14 @@ $$v = \frac{2\pi v}{T}$$
 
 **Ferris wheel: top**
 
-###
+### 2.10.4 analyze two scenarios involving uniform circular motion (UCM) - circular orbits and conical pendula - that require more complex mathematics. 
+
+- "Uniform (constant-speed) circular motion," UCM 
+- at each instant, **a** is purely centripetal. 
+- At each instant, **a** is 
+  - redirecting the veocity vector v 
+  - ...but not changing v's magnitude (speed)
+
+**Conical pendulum**
+- A ball swings on a rope, making a horizontal circle (radius R) at constant speed. The rope makes an angle $\theta$ with the vertical. 
+- Find the speed v the ball must have. 
