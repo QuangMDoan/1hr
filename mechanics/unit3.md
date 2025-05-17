@@ -225,3 +225,63 @@ $$F(2) = 3N$$
 $$F(x) = -\frac{dU}{dx}$$
 $$F(2) = -4/3N$$
 
+## 3.4 Conservation of energy 
+
+### 3.4.1 discuss three types of mechanical energy; kinetic energy, elastic potential energy, and gravitational potential energy. 
+
+### 3.4.2 explore conservation of energy conceptually. 
+using bar graphs
+
+### 3.4.3 find both symbolic expressions and numerical answers for conservation of energy problems. 
+
+### 3.4.4 explore how nonconservative forces affect the conservation of energy. 
+
+**Nonconservative Forces**
+- Nonconservative forces are ones for which the path taken to get from point A to point B matters. 
+- an example of nonconservative force is friction. When a box is pushed across a floor iwth friction, some of the energy is converted to thermal energy and dissipates. The total distance the box travels to get from point A to point B matters, because the total distance traveled is part of the calculation of how much energy is converted from mechanical energy to thermal energy. 
+- This is foten called the "work done by friction", where $W_f = F_fd$, but think of it more as "stolen energy"
+
+**Bar Graphs with Friction**
+- A box at the top of an incline (with friction) starts from rest. When given a push, it slides down the incline. 
+- Complete the bar graphs to represent what forms of energy are present at the top of the incline and at the bottom of the incline. 
+
+## 3.5 Power 
+
+### 3.5.1 explore how power is defined as the rate at which work is done. 
+**Work**
+$$\Delta E = W = \int \vec{F} \cdot d\vec{r}$$
+- `Power`: is the rate at which we do work, or the rate at which energy is transferred or converted. 
+$$P = \frac{\Delta E}{\Delta t}$$
+
+This is what we call `average power.`
+- Problems on the AP Exam do not always use the term power. Instead you might see "rate of energy change", "how fast energy is used," or, in circuits, it becomes "energy dissipated."
+
+**Stop that car!**
+- Calculate the magnitude of work required to stop a 1,500kg car moving at 20m/s. 
+
+### Takeaways 
+- Work depends on the force applied, the distance the force is applied and the angle between the force and distance. 
+- Work is maximum when the angle between the force and displacement is $0\degree$ (+work) or $180\degree$ (-work)
+- Work changes the energy of an object. 
+- Power is how fast you do work, or the rate of energy change. 
+
+### 3.5.2 explore how to calculate instantaneous power. 
+$$P_{inst} = \frac{dW}{dt}$$
+$$P_{inst} = \vec{F_{||}}\cdot \vec{v} = Fvcos(\theta)$$
+**Instantaneous Power**
+- The work done on an object is given by 
+$$W = 4t^2+3t$$
+- Calculate P(2)
+  
+**Lawnmowers**
+- While shoppin for lawnmowers, I encounter an interesting claim. One lawnmower claims it has a maximum power output of 750W if the user provides a 400N force on the handle which is at an angle of $30 \degree$ to the horizontal allowing the mower to reach a speed of 3m/s Is the claim true or false?
+
+$$P_{inst} = \vec{F}\cdot\vec{v}$$
+$$P_{inst}= Fv\cos(\theta)$$
+$$P_{inst} = 400N \times 3\frac{m}{s} \times \cos(30\degree)$$
+$$P_{inst} = 600\sqrt{3}W = 1040W$$
+
+### Takeaways 
+- There are other ways to calcualte power, 
+  - Using the velocity 
+  - Derivative of a work function. 
