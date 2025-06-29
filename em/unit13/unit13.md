@@ -430,4 +430,266 @@ $$U_L = \frac{1}{2}LI^2$$
 
 ### 13.5.3 analyze steady state conditions for various open/closed switch scenaiors involved in LR circuits. 
 
+**Immediate conditions**
 
+Both switches are closed 
+
+- At t = 0s, we close both switches simultaneously
+- Inductor acts like an open switch at t = 0s
+- Current will flow through both resistors and switches, but not through the inductor. 
+- Current measured from $A_1$ and $A_2$ is $\frac{\epsilon}{2R}$ and is moving from left to right in both ammeters. 
+
+**Steady State Conditions**
+- After a long time, inductor no longer opposes the rapid change in current through it. inductor will essentially act like a wire. Current measured by $A_1$ is $\frac{\epsilon}{R}$, moving from left to right through $A_1$
+- After a long time, current measured by $A_2$ is zero. 
+- Inductor acts like a wire after a long time, allowing current to flow from top to bottom.
+
+**Immediate conditions**
+
+open switch 1 at time t equals to zero 
+Immediately after opening switch $S_1$, current in the inductor continues to be $\frac{\epsilon}{R}$ and moving downward through the inductor. 
+- In this case, the inductor opposes the decrease in current from opening switch $S_1$
+- Current measured in $A_2$ is $\frac{\epsilon}{R}$ moving from right to left through the ammeter and will decay to zero over time. 
+
+### Takeaways:
+At t = 0s 
+- The inductor opposes a rapid change in current, with the potential difference expression as $\Delta V_L = -L\frac{dI}{dt}$
+- The net current through the inductor will initially be zero, then start to gradually increase. 
+- The inductor can be thought of as an open switch at this point, with no energy stored due to no current flow and no magnetic field present. 
+
+After a long time 
+- The inductor will no longer oppose the rapid change in current and the potential difference across the inductor will be zero. 
+- The inductor can be thought of as a wire with neglgible resistance at this point, and there is energy stored in the inductor, which can be expressed as $U_L = \frac{1}{2}LI^2$ 
+- An inductor that has a current flowing through it can then dissipate that energy through a resistor with an exponentially decaying current over time. 
+
+$$I(t) = \frac{\epsilon}{R}e^{-t/\tau}$$
+
+## 13.6 Circuits with Capacitors and Inductors 
+
+### 13.6.1 explore relationships between potential energy stored in capacitors and inductors in an ideal LC circuit through the use of an experimental procedure. 
+
+**Capacitors**
+- Symbol C
+- Unit: Farad(F)
+- Equation $C = \frac{\kappa \epsilon_0 A}{d}$
+- Stores energy in its electric field
+- $U_C = \frac{1}{2}C\Delta V^2$
+- Initial charging acts like "wire"
+- Steady charge acts like "opposing battery"
+
+**Inductors**
+- Schematic Symbol: L 
+- Unit: Henry(H)
+- Equation: $L = \frac{\mu_{core}N^2A}{l}$
+- Stores energy in its magnetic field 
+- $U_L = \frac{1}{2}LI^2$
+- Initial current acts like "opposing battery"
+- Steady current acts like "wire"
+
+**LC Circuits (A model)**
+- Circuits with only an `inductor (L)` and `Capacitor (C)` are known as LC circuits. 
+
+**Lab Design**
+Create a lab setup using the schematics shown at tright to "charge" the capacitor in an LC circuit and then control when to discharge. 
+
+- This Circuit will charge the capacitor when S1 is closed, then with S1 open, close S2 to create the LC circuit. 
+- Where should a voltmeter and ammeter be attached to determine the voltage of the capacitor and current in the circuit?
+
+**Analyzing Data**
+- The data is periodic
+- No energy lost from circuit
+
+$$U_{Cmax} = U_C + U_L = U_{Lmax}$$
+
+**Solving for maximum current**
+
+In circuits containing only a charged capacitor and an inductor, the maximum current through the inductor can be determined using conservation of energy within the circuit. 
+
+$$\frac{1}{2}C\Delta V_{max}^2 = \frac{1}{2}LI_{max}^2$$
+
+
+| $V_C$(Volts)       |   I(Amps)     |
+|----|---|
+|10.0|0.0|
+|7.0| 3.6|
+|0.0| 5.0|
+|-8.5|2.6|
+|-9.5|1.6|
+|-7.5|-3.3|
+|-3.0|-4.8|
+|4.0|-4.6|
+|6.0|-4.0|
+|9.0|-2.2|
+
+![alt text](f5.png)
+fitting a line to relate $I_{Max}$ with $V_{CMax}$
+using 
+$$\frac{1}{2}C \cdot V^2 = L \cdot I^2$$
+$$\sqrt{C} \cdot V = \sqrt{L} \cdot I$$
+$$I = \frac{\sqrt{C}}{\sqrt{L}}V + \text{Noise}$$
+slope m = $\frac{\sqrt{C}}{\sqrt{L}} => L = \frac{C}{m^2}$
+
+
+
+slope $m = 0.19 => L = \frac{0.1}{0.19^2} = 2.8H$
+
+**Solving for maximum current**
+
+A 0.4F capacitor is charged by a 9 volt battery. The capacitor is then disconnected from the battery and attached to a 1.6H inductor what is the maximum current in the circuit. 
+
+### Takeaways 
+
+- Circuits with only an `inductor (L)` and `Capacitor (C)` are known as lC circuits. 
+- The maximum curren through the inductor in an LC circuit can be determined using conservation of energy within the circuit. 
+- In an experiment there would be some resistance resulting in loss of energy over time, but treating all circuit components as ideal helps learn general properties LC circuits. 
+
+### 13.6.2 derive simple harmonic nature of an ideal LC circuit and make claims based on its expected behavior. 
+
+**Key Equations**
+
+$$C = \frac{Q}{\Delta V}$$
+- C is capacitance 
+- Q charge on plates of capacitor
+- $\Delta V$: Potential difference across plates
+
+$$\epsilon = -L\frac{dI}{dt}$$
+- $\epsilon$ EMF across inductor 
+- $L$: Inductance
+- $\frac{dI}{dt}$: Time derivative of current 
+  
+$$I = \frac{dq}{dt}$$
+- I: Current 
+- \frac{dq}{dt}: Time derivative of charge 
+
+**Simple Harmonic Motion Review**
+
+A special case of periodict motion where restoring force is proportional to the object's displacement from equilibrium. 
+
+- Mass-spring systems: $-kx = ma => -kx = m\frac{d^2x}{dt^2}$
+- simple pendulums: $-mgL\sin(\theta) = I\alpha => -g(\theta) = L\frac{d^2\theta}{dt^2}$
+- $\sin(\theta) = \theta$: small angle approximation
+
+**Key Idea**
+
+In circuits containing only a charged capacitor and an inductor (LC Circuits), the time dependence of the charge stored in the capacitor can be modeled as simple harmonic motion. 
+
+Video 1 showed the current and voltage data was periodic. 
+
+![alt text](f7.png)
+
+**Kirchhoff's Loop Rules**
+- Kirchoff's Loop rule: The sum of potential differences across all circuit elemetns in a single closed loop must equal zero. 
+
+$$\Delta V_C - \Delta V_L = 0$$
+$$\Delta V_L = \epsilon = -L\frac{dI}{dt}$$
+$$\Delta V_C = \frac{Q}{C}$$
+$$\frac{q}{C} -(-L\frac{dI}{dt}) = 0$$
+$$L\frac{dI}{dt} = -\frac{q}{C}$$
+$$I = \frac{dq}{dt} => \frac{dI}{dt} = \frac{d^2q}{dt^2}$$
+$$L\frac{d^2q}{dt^2} = -\frac{q}{C}$$
+$$\frac{d^2q}{dt^2} = -\frac{1}{LC}q$$
+
+- This is a second order linear differential equation
+- This is a second order linear ODE
+
+While the current in an LC circuit is as its maximum, what is true about the magnitude of the EMF of the inductor?
+- the EMF is zero
+
+$$\epsilon = -L\frac{dI}{dt}$$
+- Maximum current occurs when instantaneous $\frac{dI}{dt} = 0$
+- If current was still increasing or decreasing, it couldn't be the maximum!
+
+### Takeaways 
+- In LC Circuits the time dependence of the charge stored in the capacitor can be modeled as `simple harmonic motion. `
+- The derived equation showing `SHM` for an LC Circuit is: 
+
+$$\frac{d^2q}{dt^2} = -\frac{1}{LC}q$$
+- The equation is derived from Kirchhoff's Loop Rule using the potential difference for a capacitor and the EMF of an inductor. 
+
+### 13.6.3 derive the angular frequency of an ideal LC circuit, and then compare and calculate the period of oscillation between various cases. 
+
+**Key Equations**
+$$\frac{d^2q}{dt^2} = -\frac{1}{LC}q$$ 
+- SHM for an LC circuit
+$$\frac{d^2q}{dt^2} = -\omega^2x$$
+- In mechanics, this second order differential equation is derived for an object exhibiting SHM
+- $\omega$: Angular Frequency
+$$T = \frac{2\pi}{x}$$
+- T: Period 
+
+**Tying it together** 
+
+The angular frequency of an oscillating LC circuit can be derived from the differential equation that describes an LC circuit.
+$$\frac{d^2q}{dt^2} = -\frac{1}{LC}q$$ 
+$$\frac{d^2q}{dt^2} = -\omega^2q$$
+$$\omega^2 = \frac{1}{LC}$$
+$$\omega_{LC} = \frac{1}{\sqrt{LC}}$$
+
+$$T = \frac{2\pi}{\omega}$$
+$$T_{LC} = 2\pi \sqrt{LC}$$
+
+$$T_S = 2\pi\sqrt{\frac{m}{k}}$$
+$$T_P = 2\pi\sqrt{\frac{L}{g}}$$
+
+**Units "check-up" (AKA dimensional analysis)**
+- L: Inductance - Henrys (H)
+$$\epsilon = -L\frac{dI}{dt} => V = H\frac{A}{s} => H = \frac{Vs}{A} = \frac{Vs}{C/s} => Henry(H) = \frac{Vs^2}{C}$$
+
+- C: Capacitance - Farads (F)
+$$C = \frac{Q}{\Delta V} => Farad(F) = \frac{C}{V}$$
+
+- T: Period (seconds/cycle)
+$$T = 2\pi\sqrt{LC}$$
+
+$$s = 2\pi\sqrt{\frac{Vs^2}{C}\frac{C}{V}}$$
+$$s = s$$
+
+This is a cosine function
+- When we start with t = 0 the voltage across the capacitor is equal to $V_{CMax}$
+- Some time later the current starts to flow, decreasing my voltage of the capacitor while my current increases to some point having no charge left on capacitor(When t = T/4)
+- continuing forward I then go to half the overall period where now my charge has gone form the top plate to the bottom plate flipping the voltage of my capacitor. 
+- As I keep going now my current flows the opposite direction where I eventually have no charge stored on the capacitor (t = 3T/4) maximum magnetic field of my inductor.  Gives 0 voltage across the capacitor. 
+- And once again I continue until I get back to the same point. 
+
+This forms a cosince function which is periodic. Why this is indeed Simple Harmonic Motion, or SHM. 
+
+$$T_A > T_B, \quad T = 2\pi\sqrt{LC}$$
+
+Higher Period -> Higher Capacitance 
+
+$$C_A > C_B$$
+
+- Voltage doesn't affect the period of oscillation. 
+- The period of oscillation is proportional to $\sqrt{L}$ and $\sqrt{C}$
+
+**Calculating Capacitance**
+
+What is the capacitance, C, of the capacitor?
+$$T = 2\pi\sqrt{LC}$$
+$$24*10^{-3}s = 2\pi\sqrt{0.8}*\sqrt{C}$$
+$$C = (\frac{24*10^{-3}}{2\pi\sqrt{0.8}})^2 $$
+$$C = 1.82*10^{-5}F$$
+
+What is the maximum voltage of the capacitor?
+$$U_{CMax} = U_{LMax}$$
+$$\frac{1}{2}C\Delta V_{max}^2 = \frac{1}{2}LI_{max}^2$$
+$$\Delta V_{max} = I_{max}\sqrt{\frac{L}{C}} $$
+$$\Delta V_{max} = (12*10^{-6}A)\sqrt{\frac{0.8H}{1.82*10^{-5}F}}$$
+$$\Delta V_{max} = 2.5mV$$
+$$\omega = \frac{1}{\sqrt{LC}}$$
+$$\omega^2 = \frac{1}{LC}$$
+$$25 = \frac{1}{0.4*C}$$
+$$C = \frac{1}{0.4*25}$$
+$$C = \frac{1}{10}$$
+
+### Takeaways 
+
+LC circuits can be modeled as SHM with an angular frequency equal to the following: 
+
+$$\omega = \frac{1}{\sqrt{LC}}$$
+
+The period of an LC circuit is equal to the following: 
+
+$$T = 2\pi\sqrt{LC}$$
+
+Increasing either the inductance or capcitance causes the circuit to oscillate with a shorter frequency/longer period. 
