@@ -15,14 +15,13 @@ struct ControllerData {
 class Controller {
 public: 
   Controller(uint8_t addr): _addr(addr), _deadzone(0) {}
-
   void setDeadzone(uint8_t deadzone) {
     _deadzone = deadzone;
   }
-  
+
   void update();
   void start();
-  void printBin(uint8_t buf[]);
+  void printBin(uint8_t buf[], int numBytes);
   void print();
 
   ControllerData getData(){

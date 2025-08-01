@@ -8,9 +8,11 @@
 
 uint8_t button_mask[4] = {0x00, 0x01, 0x00, 0x67};
 
-void Controller::printBin(uint8_t buf[]) {
-  for (int i = 0; i < 4; i++) {
-    Serial.print(buf[i]);
+void Controller::printBin(uint8_t buf[], int numBytes) {
+  for (int i = 0; i < numBytes; i++) {
+    for (int j = 7; j >= 0; j--){
+      Serial.print(bitRead(buf[i], j));  
+    }
     if (i < 3) Serial.print('.');
   }
   Serial.println();
@@ -21,11 +23,12 @@ void Controller::start(){
   i2c_begin(_addr);
 
   uint8_t x = 0x01;
-  while(!(i2c_write(0x00, 0x7F, &x, 1)));
-  while(!(i2c_write(0x00, 0x01, &x, 1)));
+  while(!(i2c_write(STATUS, 0x7F, &x, 1)));
+  while(!(i2c_write(STATUS, 0x01, &x, 1)));
   
-  i2c_write(0x01, 0x0B, button_mask, 4);
-  i2c_write(0x01, 0x05, button_mask, 4);
+  i2c_write(GPIO, 0x0B, button_mask, 4);
+  i2c_write(GPIO, 0x05, button_mask, 4);
+
   setDeadzone(20);
 }
 int16_t byteswap_16(int16_t val) {
@@ -36,12 +39,11 @@ int16_t byteswap_16(int16_t val) {
 }
 
 void Controller::update(){
-
   uint8_t buf[4] = {0x00, 0x01, 0x00, 0x67};
-  // printBin(buf);
 
-  i2c_read(0x01, 0x04, buf, 4, 0);
-  // printBin(buf);
+  // printBin(buf, 4);
+  i2c_read(GPIO, 0x04, buf, 4, 0);
+  // printBin(buf, 4);
   
   _data.aButton = !(buf[3] >> 5 & 1);
   _data.bButton = !(buf[3] >> 1 & 1);
@@ -59,11 +61,9 @@ void Controller::update(){
   if(abs(_data.x_Axis) < _deadzone){
     _data.x_Axis = 0;
   }
-
   if(abs(_data.y_Axis) < _deadzone){
     _data.y_Axis = 0;
   }
-
 }
 
 void Controller::print(){
