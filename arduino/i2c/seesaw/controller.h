@@ -13,15 +13,16 @@ struct ControllerData {
 };
 
 class Controller {
+
 public: 
-  Controller(uint8_t addr): _addr(addr), _deadzone(0) {}
+  Controller(uint8_t addr, void (*callback_fn)() ): _addr(addr), _deadzone(0), _callback_fn(callback_fn) {}
   void setDeadzone(uint8_t deadzone) {
     _deadzone = deadzone;
   }
 
   void update();
   void start();
-  void printBin(uint8_t buf[], int numBytes);
+  void printBin(uint8_t* buf, int numBytes);
   void print();
 
   ControllerData getData(){
@@ -31,5 +32,7 @@ private:
   uint8_t _addr;
   uint8_t _deadzone;
   ControllerData _data;
+
+  void (*_callback_fn)();
 };
 #endif 
