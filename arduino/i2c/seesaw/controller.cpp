@@ -2,6 +2,13 @@
 #include "i2c.h"
 #include "Arduino.h"
 
+extern "C" {
+void __controllerDefaultCallback(uint8_t ___) {}
+}
+
+void btnPressed(uint8_t buttons) __attribute__ ( (weak, alias("__controllerDefaultCallback")));
+void btnReleased(uint8_t buttons) __attribute__ ( (weak, alias("__controllerDefaultCallback")));
+
 #define STATUS 0x00
 #define GPIO 0x01
 #define ADC 0x09
@@ -51,33 +58,39 @@ void Controller::update(){
   i2c_read(GPIO, 0x04, buf, 4, 0);
   // printBin(buf, 4);
   
-  _data.aButton = !(buf[3] >> 5 & 1);
-  _data.bButton = !(buf[3] >> 1 & 1);
-  _data.xButton = !(buf[3] >> 6 & 1);
-  _data.yButton = !(buf[3] >> 2 & 1);
+  _state.aButton = !(buf[3] >> 5 & 1);
+  _state.bButton = !(buf[3] >> 1 & 1);
+  _state.xButton = !(buf[3] >> 6 & 1);
+  _state.yButton = !(buf[3] >> 2 & 1);
 
-  _data.startButton = !(buf[1] & 1);
-  _data.selectButton = !(buf[3] & 1);
+  _state.startButton = !(buf[1] & 1);
+  _state.selectButton = !(buf[3] & 1);
 
   uint16_t x;
   i2c_read(ADC, 0x15, (uint8_t*)&x, 2, 500);
-  _data.x_Axis = 511 - swap_bytes(x);
+  _state.x_Axis = 511 - swap_bytes(x);
 
   uint16_t y;
   i2c_read(ADC, 0x16, (uint8_t*)&y, 2, 500);
-  _data.y_Axis = 511 - swap_bytes(y);
+  _state.y_Axis = 511 - swap_bytes(y);
 
-  if(abs(_data.x_Axis) < _deadzone){
-    _data.x_Axis = 0;
+  if(abs(_state.x_Axis) < _deadzone){
+    _state.x_Axis = 0;
   }
-  if(abs(_data.y_Axis) < _deadzone){
-    _data.y_Axis = 0;
+  if(abs(_state.y_Axis) < _deadzone){
+    _state.y_Axis = 0;
   }
 
-  if (_data.bButton) {
-    _callback_fn();
-  }
+  _state.update_bits();
+
+  uint8_t pressedButtons = _state.bits & ~_prevState.bits;
+  uint8_t releasedButtons = ~_state.bits & _prevState.bits;
   
+  if (pressedButtons) btnPressed(pressedButtons);
+  if (releasedButtons) btnReleased(releasedButtons);
+
+  _prevState = _state;
+
 }
 
 void Controller::print(){
@@ -86,8 +99,8 @@ void Controller::print(){
   "X axis: %4d | Y axis: %4d | "
   "A button: %u | B button: %u | X button: %u | Y button: %u | "
   "SELECT button: %u | START button: %u", 
-  _data.x_Axis, _data.y_Axis,
-  _data.aButton, _data.bButton, _data.xButton, _data.yButton,
-  _data.selectButton, _data.startButton);
+  _state.x_Axis, _state.y_Axis,
+  _state.aButton, _state.bButton, _state.xButton, _state.yButton,
+  _state.selectButton, _state.startButton);
   Serial.println(buf);
 }
