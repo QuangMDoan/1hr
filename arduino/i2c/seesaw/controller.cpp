@@ -7,6 +7,10 @@
 #define ADC 0x09
 
 uint8_t button_mask[4] = {0x00, 0x01, 0x00, 0x67};
+extern "C" {
+  void defaultFunc(){}
+}
+void xButtonPressed() __attribute__((weak, alias ("defaultFunc")));
 
 void Controller::printBin(uint8_t* buf, int numBytes) {
   for (int i = 0; i < numBytes; i++) {
@@ -73,7 +77,9 @@ void Controller::update(){
   if(abs(_state.y_Axis) < _deadzone){
     _state.y_Axis = 0;
   }
-  
+  if(_state.xButton){
+    xButtonPressed();
+  }
 }
 
 void Controller::print(){
