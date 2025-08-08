@@ -2,13 +2,6 @@
 #include "i2c.h"
 #include "Arduino.h"
 
-extern "C" {
-void __controllerDefaultCallback(uint8_t ___) {}
-}
-
-void btnPressed(uint8_t buttons) __attribute__ ( (weak, alias("__controllerDefaultCallback")));
-void btnReleased(uint8_t buttons) __attribute__ ( (weak, alias("__controllerDefaultCallback")));
-
 #define STATUS 0x00
 #define GPIO 0x01
 #define ADC 0x09
@@ -80,17 +73,7 @@ void Controller::update(){
   if(abs(_state.y_Axis) < _deadzone){
     _state.y_Axis = 0;
   }
-
-  _state.update_bits();
-
-  uint8_t pressedButtons = _state.bits & ~_prevState.bits;
-  uint8_t releasedButtons = ~_state.bits & _prevState.bits;
   
-  if (pressedButtons) btnPressed(pressedButtons);
-  if (releasedButtons) btnReleased(releasedButtons);
-
-  _prevState = _state;
-
 }
 
 void Controller::print(){
