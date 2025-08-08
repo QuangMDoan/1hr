@@ -16,7 +16,7 @@ struct ControllerData {
 class Controller {
 
 public: 
-  Controller(uint8_t addr): _addr(addr), _deadzone(0) {}
+  Controller(uint8_t addr, void (*btnCallbackFn)()): _addr(addr), _deadzone(0), _btnCallbackFn(btnCallbackFn) {}
   void setDeadzone(uint8_t deadzone) {
     _deadzone = deadzone;
   }
@@ -33,5 +33,6 @@ private:
   uint8_t _deadzone;
 
   ControllerData _state;
+  void (*_btnCallbackFn)();
 };
 #endif 

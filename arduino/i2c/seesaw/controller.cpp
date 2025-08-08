@@ -8,8 +8,6 @@
 
 uint8_t button_mask[4] = {0x00, 0x01, 0x00, 0x67};
 
-
-
 void Controller::printBin(uint8_t* buf, int numBytes) {
   for (int i = 0; i < numBytes; i++) {
     for (int j = 7; j >= 0; j--){
@@ -74,7 +72,12 @@ void Controller::update(){
   }
   if(abs(_state.y_Axis) < _deadzone){
     _state.y_Axis = 0;
-  }  
+  }
+
+  if(_state.aButton){
+    _btnCallbackFn();
+  }
+
 }
 
 void Controller::print(){
