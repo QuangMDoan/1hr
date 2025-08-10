@@ -22,19 +22,14 @@
 #define TOP_SPEED         90                                //PWM value for max speed of motors
 #define DISPENSE_DISTANCE 500000                            //Value combinedMotorSpeed needs to reach to drop a domino. Decreasing this puts dominoes closer together.
 
-//set up the servo                          
 Servo servoMotor;                                           //Create an instance of a servo motor object
-
-//set up the drive motors
 Motor motor1 = Motor(AIN1, AIN2, PWMA, OFFSET_A, STBY);
 Motor motor2 = Motor(BIN1, BIN2, PWMB, OFFSET_B, STBY);
 int combinedmotorspeed, leftMotorSpeed, rightMotorSpeed;    //creating variables like this initializes all their values to 0.
 
-// Define variables for PID control
 float lastError, derivative, controlSignal;                 //these initialize to 0/
 int error;
 
-//Line sensor variables
 int leftSensorValue, rightSensorValue;                      //variables for storing the value of the line sensors
 
 //Out of dominoes switch setup
@@ -53,7 +48,6 @@ void setup()
   
   //Set up the button handler to detect long press of limit switch. 
   //Have to use longPress because switch is pressed and held, not pressed and release as a single click.
-
   stopButton.setPressMs(200);                //Sets up the button handler to wait for 200ms before reporting the limit switch is pressed.
   stopButton.attachLongPressStart([]() {     //Lambda function that sets stopButtonPressed flag to true when the switch is pressed. 
     stopButtonPressed = true;                
@@ -88,12 +82,10 @@ void loop() {
   distanceSinceLastDrop += combinedmotorspeed;
 
   //That's it for the line following functions, now move on to dispensing dominoes at the appropriate time.
-
   stopButton.tick();                    //Check the switch to see if we're out of dominoes or not. This has to be called every time through the loop()
   
   if (!stopButtonPressed) {             //If the limit switch is not pressed, this is true and the domino dispensing code executes
     //figure out when to dispense a domino based on how far the robot has travelled.
-
     if ((distanceSinceLastDrop >= DISPENSE_DISTANCE) && !dominoDropped) {              //if we've travelled far enough and a domino hasn't been dropped yet
       servoMotor.write(SERVO_RIGHT);
       distanceSinceLastDrop = 0;                                                       //reset the distance count to 0 because we just dropped a domino
