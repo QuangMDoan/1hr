@@ -18,7 +18,7 @@ Developed on Arduino 1.6.4
 Developed with ROB-9457
 ******************************************************************************/
 
-#include "SparkFun_TB6612.h"
+#include "spark_fun.h"
 #include <Arduino.h>
 
 Motor::Motor(int In1pin, int In2pin, int PWMpin, int offset, int STBYpin)
