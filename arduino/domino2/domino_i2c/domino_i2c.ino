@@ -19,6 +19,8 @@ int combinedmotorspeed, leftMotorSpeed, rightMotorSpeed;    //creating variables
 
 Controller controller(0x50);
 
+double inOutRatio = TOP_SPEED/511.0;
+
 void setup()
 {
   digitalWrite(STBY, HIGH);                  //Enable the motor driver  
@@ -29,13 +31,12 @@ void setup()
 
 void loop() {
   controller.update();
-  int16_t xAxis = controller.getState().x_Axis;
-  int16_t yAxis = controller.getState().y_Axis;  
-
-  double inOutRatio = TOP_SPEED/511.0;
-  leftMotorSpeed = xAxis  * inOutRatio;
-  rightMotorSpeed = yAxis * inOutRatio;
+  int16_t xAxis = controller.getState().x_Axis * inOutRatio;
+  int16_t yAxis = controller.getState().y_Axis * inOutRatio;  
   
+  leftMotorSpeed = xAxis  + yAxis;
+  rightMotorSpeed = xAxis - yAxis;
+
   motor1.drive(leftMotorSpeed);
   motor2.drive(rightMotorSpeed);  
 }
