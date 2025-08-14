@@ -13,7 +13,7 @@
 
 #define MIN_PIN 2
 
-char x[10][9] = {"11010111",    // 0
+char x[13][9] = {"11010111",    // 0
                   "00010100",   // 1
                   "11001101",   // 2
                   "01011101",   // 3
@@ -22,7 +22,10 @@ char x[10][9] = {"11010111",    // 0
                   "11011010",   // 6
                   "00010101",   // 7
                   "11011111",   // 8
-                  "01011111"   // 9
+                  "01011111",   // 9
+                  "00001000",  // - 
+                  "11001011",  // E for Err
+                  "10001000"  // r for Err
                  };
 
 void setup() {
@@ -40,11 +43,38 @@ void displayDigit(int digit, int pos){
   }
 }
 
+void displayErr(){
+  displayDigit(12, 0);
+  delay(4);
+  displayDigit(12, 1);
+  delay(4);
+  displayDigit(11, 2);
+  delay(4);
+}
+
 void displayDigits(int32_t x) {
-  for (int pos =0; pos < 4; pos++) {
+
+  if (x < -999 || x > 9999) {
+    displayErr();
+    return;
+  }
+
+  bool neg = x < 0;
+  x = abs(x);
+  int pos = 0;
+
+  while (pos < 4) {
     displayDigit(x%10, pos);
     delay(4);
     x /= 10;
+
+    pos++;
+    if (x == 0) break;
+  }
+
+  if(neg){
+    displayDigit(10, pos);
+    delay(4);
   }
 }
 
@@ -54,6 +84,19 @@ void displayDigitsFor(int32_t x, int ms){
 }
 
 void loop(){
-  for (int x = 29; x < 2026; x++) 
-    displayDigitsFor(x, 500);
+  displayDigitsFor(-800, 1000);
+  displayDigitsFor(0, 1000);
+  displayDigitsFor(-1, 1000);
+
+  // Outside range (-999 to 9999)
+  displayDigitsFor(-2025, 1000); 
+  displayDigitsFor(-77, 1000);
+
+  displayDigitsFor(-1000, 1000); 
+  displayDigitsFor(2025, 1000);
+
+  displayDigitsFor(10000, 1000); 
+  displayDigitsFor(9999, 1000);
+
+  displayDigitsFor(77, 1000);
 }
