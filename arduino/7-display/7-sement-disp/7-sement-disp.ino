@@ -121,26 +121,12 @@ void displayDigitsFor(double x, int ms){
 }
 
 void loop(){
-  displayDigitsFor(1.434, 1000);
-  displayDigitsFor(1.43, 1000);
-  displayDigitsFor(14.34, 1000);
-  displayDigitsFor(143.4, 1000);
-  displayDigitsFor(-14.5, 1000);
-  displayDigitsFor(-1.43, 1000);
-
-  // displayDigitsFor(0, 1000);
-  // displayDigitsFor(-1, 1000);
-
-  // // Outside range (-999 to 9999)
-  // displayDigitsFor(-2025, 1000); 
-  // displayDigitsFor(-77, 1000);
-
-  // displayDigitsFor(-1000, 1000); 
-  // displayDigitsFor(2025, 1000);
-
-  // displayDigitsFor(10000, 1000); 
-  // displayDigitsFor(9999, 1000);
-
-  // displayDigitsFor(77, 1000);
-  // displayDigitsFor(-13.5, 1000);
+  // displayDigitsFor(1.434, 1000);
+  displayDigitsFor(3.141592, 1000); // expecting 3.141
+  displayDigitsFor(20.12345, 1000); // expecting 20.12
+  displayDigitsFor(1234.567, 1000); // expecting 1234 
+  displayDigitsFor(-50.988,  1000); // expecting -50.9
+  displayDigitsFor(-14.5, 1000);    // expecting -14.5
+  displayDigitsFor(-1.43, 1000);    // expecting -1.43
+  displayDigitsFor(-999.1, 1000);   // expecting -999
 }
