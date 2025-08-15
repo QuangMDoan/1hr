@@ -10,22 +10,12 @@
 #define CATH_2 11 
 #define CATH_3 12 
 #define CATH_4 13
-
 #define MIN_PIN 2
 
-char x[13][9] = {"11010111",    // 0
-                  "00010100",   // 1
-                  "11001101",   // 2
-                  "01011101",   // 3
-                  "00011110",   // 4
-                  "01011011",   // 5
-                  "11011010",   // 6
-                  "00010101",   // 7
-                  "11011111",   // 8
-                  "01011111",   // 9
-                  "00001000",  // - 
-                  "11001011",  // E for Err
-                  "10001000"  // r for Err
+char x[13][9] = { "11010111", "00010100", "11001101", "01011101",   // encoding 0,1,2,3
+                  "00011110", "01011011", "11011010", "00010101",   // encoding 4,5,6,7
+                  "11011111", "01011111", "00001000",   // encoding 8, 9, and minus "-"
+                  "11001011", /* encoding "E" for "Err" */ "10001000" // encoding "r" 
                  };
 
 void setup() {
@@ -33,27 +23,69 @@ void setup() {
   Serial.begin(9600);
 }
 
-void displayDigit(int digit, int pos){
-  for(int i = 0; i < 4; i++) {
+void displayDigit(int digit, int pos, int decPlace = 5){
+  for (int i = 0; i < 4; i++)
     digitalWrite(CATH_1 + i, pos != i);
-  } 
-
-  for(int i = 0; i < 8; i++) {
+  
+  for (int i = 0; i < 8; i++) 
     digitalWrite(MIN_PIN + i, x[digit][i] - '0');
+
+  if (pos == decPlace) {
+    digitalWrite(4, 1);
   }
 }
 
 void displayErr(){
-  displayDigit(12, 0);
+  displayDigit(12, 0); // show x[12][i] segments for letter "r"
   delay(4);
-  displayDigit(12, 1);
+  displayDigit(12, 1); // show x[12][i] segments for letter "r"
   delay(4);
-  displayDigit(11, 2);
+  displayDigit(11, 2); // show x[11][i] segments for letter "E"
   delay(4);
 }
 
-void displayDigits(int32_t x) {
+void displayDigits(double x) {  
+  if (x < -99.9 || x > 999.9) {
+    displayErr();
+    return;
+  }
 
+  bool neg = x < 0.0;
+  x = abs(x);
+  int decPlace = 0;
+
+  if (x > 100.0) {
+    decPlace = 1;
+    x = x*10;
+  } else if (x > 10.0) {
+    decPlace = 2;
+    x = x*100;
+  } else if (x > 1.0) {
+    decPlace = 3;
+    x = x*1000;
+  }
+
+  if(neg) {
+    x = x/10;
+    decPlace = decPlace-1;
+  }
+  int pos = 0;
+  int xd = (int) x;
+  while (pos < 4) {  
+    displayDigit(xd%10, pos, decPlace);
+    delay(4);
+    xd /= 10;
+    pos++;
+    if (xd == 0) break;
+  }
+
+  if(neg){
+    displayDigit(10, pos);
+    delay(4);
+  }
+}
+
+void displayDigits(int x) {
   if (x < -999 || x > 9999) {
     displayErr();
     return;
@@ -78,25 +110,37 @@ void displayDigits(int32_t x) {
   }
 }
 
-void displayDigitsFor(int32_t x, int ms){
+void displayDigitsFor(int x, int ms){
+  uint32_t start = millis();
+  while ((millis() - start) < ms) displayDigits(x);
+}
+
+void displayDigitsFor(double x, int ms){
   uint32_t start = millis();
   while ((millis() - start) < ms) displayDigits(x);
 }
 
 void loop(){
-  displayDigitsFor(-800, 1000);
-  displayDigitsFor(0, 1000);
-  displayDigitsFor(-1, 1000);
+  displayDigitsFor(1.434, 1000);
+  displayDigitsFor(1.43, 1000);
+  displayDigitsFor(14.34, 1000);
+  displayDigitsFor(143.4, 1000);
+  displayDigitsFor(-14.5, 1000);
+  displayDigitsFor(-1.43, 1000);
 
-  // Outside range (-999 to 9999)
-  displayDigitsFor(-2025, 1000); 
-  displayDigitsFor(-77, 1000);
+  // displayDigitsFor(0, 1000);
+  // displayDigitsFor(-1, 1000);
 
-  displayDigitsFor(-1000, 1000); 
-  displayDigitsFor(2025, 1000);
+  // // Outside range (-999 to 9999)
+  // displayDigitsFor(-2025, 1000); 
+  // displayDigitsFor(-77, 1000);
 
-  displayDigitsFor(10000, 1000); 
-  displayDigitsFor(9999, 1000);
+  // displayDigitsFor(-1000, 1000); 
+  // displayDigitsFor(2025, 1000);
 
-  displayDigitsFor(77, 1000);
+  // displayDigitsFor(10000, 1000); 
+  // displayDigitsFor(9999, 1000);
+
+  // displayDigitsFor(77, 1000);
+  // displayDigitsFor(-13.5, 1000);
 }
