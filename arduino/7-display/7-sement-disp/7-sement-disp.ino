@@ -45,18 +45,24 @@ void displayErr(){
 }
 
 void displayDigits(double x) {  
-  if (x < -99.9 || x > 999.9) {
+  if (x <= -1000 || x >= 10000) {
     displayErr();
     return;
   }
 
   bool neg = x < 0.0;
   x = abs(x);
-  int decPlace = 0;
+  int decPlace = 10;
 
-  if (x > 100.0) {
+  if(x>=1000.0){
+    x = x;
+  }
+  else if (x > 100.0) {
     decPlace = 1;
     x = x*10;
+    if(neg){
+      decPlace = -1;
+    }
   } else if (x > 10.0) {
     decPlace = 2;
     x = x*100;
@@ -72,6 +78,7 @@ void displayDigits(double x) {
   int pos = 0;
   int xd = (int) x;
   while (pos < 4) {  
+    Serial.println(xd);
     displayDigit(xd%10, pos, decPlace);
     delay(4);
     xd /= 10;
@@ -121,7 +128,7 @@ void displayDigitsFor(double x, int ms){
 }
 
 void loop(){
-  // displayDigitsFor(1.434, 1000);
+  displayDigitsFor(1.434, 1000);
   displayDigitsFor(3.141592, 1000); // expecting 3.141
   displayDigitsFor(20.12345, 1000); // expecting 20.12
   displayDigitsFor(1234.567, 1000); // expecting 1234 
