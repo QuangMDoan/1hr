@@ -35,14 +35,20 @@ void displayDigit(int digit, int pos, int decPlace = 5){
   }
 }
 
+void clearAll(){
+  for(int i= 0; i < 8; i++) {
+    digitalWrite(MIN_PIN + i, LOW);
+  }
+}
+
 void displayErr(){
   displayDigit(12, 0); // show x[12][i] segments for letter "r"
-  delay(4);
   displayDigit(12, 1); // show x[12][i] segments for letter "r"
-  delay(4);
   displayDigit(11, 2); // show x[11][i] segments for letter "E"
-  delay(4);
+  clearAll();
 }
+
+
 
 void displayDigits(double x) {  
   if (x <= -1000 || x >= 10000) {
@@ -80,7 +86,7 @@ void displayDigits(double x) {
   while (pos < 4) {  
     Serial.println(xd);
     displayDigit(xd%10, pos, decPlace);
-    delay(4);
+    clearAll();
     xd /= 10;
     pos++;
     if (xd == 0) break;
@@ -88,7 +94,7 @@ void displayDigits(double x) {
 
   if(neg){
     displayDigit(10, pos);
-    delay(4);
+    clearAll();
   }
 }
 
@@ -104,7 +110,7 @@ void displayDigits(int x) {
 
   while (pos < 4) {
     displayDigit(x%10, pos);
-    delay(4);
+    clearAll();
     x /= 10;
 
     pos++;
@@ -113,7 +119,7 @@ void displayDigits(int x) {
 
   if(neg){
     displayDigit(10, pos);
-    delay(4);
+    clearAll();
   }
 }
 
@@ -128,12 +134,19 @@ void displayDigitsFor(double x, int ms){
 }
 
 void loop(){
-  displayDigitsFor(1.434, 1000);
-  displayDigitsFor(3.141592, 1000); // expecting 3.141
-  displayDigitsFor(20.12345, 1000); // expecting 20.12
-  displayDigitsFor(1234.567, 1000); // expecting 1234 
-  displayDigitsFor(-50.988,  1000); // expecting -50.9
-  displayDigitsFor(-14.5, 1000);    // expecting -14.5
-  displayDigitsFor(-1.43, 1000);    // expecting -1.43
-  displayDigitsFor(-999.1, 1000);   // expecting -999
+  displayDigitsFor(1.434, 500);
+  displayDigitsFor(3.141592, 500); // expecting 3.141
+  displayDigitsFor(20.12345, 500); // expecting 20.12
+  displayDigitsFor(1234.567, 500); // expecting 1234 
+  displayDigitsFor(-50.988,  500); // expecting -50.9
+  displayDigitsFor(-14.5, 500);    // expecting -14.5
+  displayDigitsFor(-1.43, 500);    // expecting -1.43
+  displayDigitsFor(-999.1, 500);   // expecting -999
+  displayDigitsFor(-9999.1, 500);
+  displayDigitsFor(1414, 500);
+  displayDigitsFor(141, 500);
+  displayDigitsFor(14, 500);
+  displayDigitsFor(1, 500);
+  displayDigitsFor(-141, 500);
+
 }
