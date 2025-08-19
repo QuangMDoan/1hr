@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include "vex.h"
 #include "drive_train.h"
 
@@ -12,15 +11,9 @@ void initializeRandomSeed(){
   srand(seed);
 }
 
-void vexcodeInit() {
-  initializeRandomSeed(); 
-}
-  
 int main() {
-  vexcodeInit();
-  MyDriveTrain driveTrain;
-  driveTrain.setup();
-  driveTrain.setSpeed(25);
+  initializeRandomSeed();
+  // create a driveTrain instance, call setup anf setSpeed
 
   driveTrain.turnForDegrees(180);
   wait(1, seconds);
@@ -29,7 +22,7 @@ int main() {
   wait(1, seconds);
 
   driveTrain.turnForDegrees(90);
-  wait(60, seconds);
+  wait(30, seconds);
 
   driveTrain.turnForDegrees(720);
   wait(1, seconds);
