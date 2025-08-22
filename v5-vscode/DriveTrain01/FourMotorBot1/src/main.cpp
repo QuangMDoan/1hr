@@ -18,19 +18,6 @@ void vexcodeInit() {
   
 int main() {
   vexcodeInit();
-  MyDriveTrain driveTrain;
-  driveTrain.setup();
-  driveTrain.setSpeed(25);
-
-  driveTrain.turnForDegrees(180);
-  wait(1, seconds);
-
-  driveTrain.turnForDegrees(90);
-  wait(1, seconds);
-
-  driveTrain.turnForDegrees(90);
-  wait(60, seconds);
-
-  driveTrain.turnForDegrees(720);
-  wait(1, seconds);
+  MecanumDriveTrain driveTrain; 
+  driveTrain.driveForMeters(2);
 }
