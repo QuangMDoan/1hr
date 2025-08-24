@@ -12,8 +12,13 @@ double ZERO_ = 0.0;
 class MecanumDriveTrain {
 public: 
   double WheelDiameter = 2.0* INCH2METERS; 
-  double WheelTrack = 0.34; 
-  double WheelBase = 0.21;
+  double TrackWidth = 11.5 * INCH2METERS; 
+  double WheelBase = 6.5*INCH2METERS;
+
+  MecanumDriveTrain(): frontLeft(PORT1, ratio18_1, false),
+                       backLeft(PORT2, ratio18_1, false), 
+                       frontRight(PORT10, ratio18_1, true),
+                       backRight(PORT9, ratio18_1, true){}
 
   double distanceInMeters(double& FLR = ZERO_, double& BLR = ZERO_, double& FRR = ZERO_, double& BRR = ZERO_) {
     FLR = frontLeft.position(turns);
@@ -86,10 +91,10 @@ public:
     Brain.Screen.clearScreen();
     resetMotors();
     double turns = deg/360; 
-    double t = WheelTrack;
+    double t = TrackWidth;
     double b = WheelBase;
     double c = WheelDiameter * M_PI;
-    double wheelRevs = turns * (t*t + b*b) * M_PI / (t*c);
+    double wheelRevs = turns * (t + b) / WheelDiameter;
     double FLR, BLR, FRR, BRR; 
     for(double y = distanceInMeters(FLR, BLR, FRR, BRR); FLR < wheelRevs; y = distanceInMeters(FLR, BLR, FRR, BRR)) {
       Brain.Screen.printAt(5, 150, "rots: %.3f, desired rots: %.3f", FLR, wheelRevs);
@@ -99,9 +104,9 @@ public:
   }
 
 private: 
-  motor frontLeft = motor(PORT1, ratio18_1, false);
-  motor backLeft = motor(PORT2, ratio18_1, false);
-  motor frontRight = motor(PORT10, ratio18_1, true);
-  motor backRight = motor(PORT9, ratio18_1, true);
+  motor frontLeft;
+  motor backLeft; 
+  motor frontRight;
+  motor backRight;
 };
 #endif
