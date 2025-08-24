@@ -19,5 +19,21 @@ void vexcodeInit() {
 int main() {
   vexcodeInit();
   MecanumDriveTrain driveTrain; 
-  driveTrain.driveForMeters(2);
+  wait(1, seconds);
+  driveTrain.DriveSidewayMeters(1.6);
+
+  wait(3, seconds);
+  driveTrain.driveForwardMeters(2);
+
+  wait(3, seconds);
+  driveTrain.turn(180);
+
+  wait(3, seconds);
+  driveTrain.driveForwardMeters(2);
+
+  wait(3,seconds);
+  driveTrain.DriveSidewayMeters(1.6);
+
+  wait(3, seconds);
+  driveTrain.turn(180);
 }
